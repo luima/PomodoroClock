@@ -1,48 +1,45 @@
 import React, { useState } from 'react';
 
-function Settings(props) {
-  const {
-    breakLength,
-    sessionLength,
-    incrementBreak,
-    incrementSession,
-    decrementBreak,
-    decrementSession,
-  } = props;
+function Break(props) {
+  const { breakLength, incrementBreak, decrementBreak } = props;
   return (
     <div>
-      <div>
-        <span id="break-label">Break Length</span>
-        <button id="break-increment" type="button" onClick={incrementBreak}>
-          +
-        </button>
-        <span id="break-length">{breakLength}</span>
-        <button id="break-decrement" type="button" onClick={decrementBreak}>
-          -
-        </button>
-      </div>
-      <div>
-        <span id="session-label">Session Length</span>
-        <button id="session-increment" type="button" onClick={incrementSession}>
-          +
-        </button>
-        <span id="session-length">{sessionLength}</span>
-        <button id="session-decrement" type="button" onClick={decrementSession}>
-          -
-        </button>
-      </div>
+      <span id="break-label">Break Length</span>
+      <button id="break-increment" type="button" onClick={incrementBreak}>
+        +
+      </button>
+      <span id="break-length">{breakLength}</span>
+      <button id="break-decrement" type="button" onClick={decrementBreak}>
+        -
+      </button>
     </div>
   );
 }
 
-function Timer() {
+function Session(props) {
+  const { sessionLength, incrementSession, decrementSession } = props;
+  return (
+    <div>
+      <span id="session-label">Session Length</span>
+      <button id="session-increment" type="button" onClick={incrementSession}>
+        +
+      </button>
+      <span id="session-length">{sessionLength}</span>
+      <button id="session-decrement" type="button" onClick={decrementSession}>
+        -
+      </button>
+    </div>
+  );
+}
+
+function Timer(props) {
   return (
     <div>
       <div>
         <span id="timer-label">Session</span>
       </div>
       <div>
-        <span id="time-left">25:00</span>
+        <span id="time-left">{props.sessionLength}</span>
       </div>
       <div>
         <button id="start_stop" type="button">
@@ -75,14 +72,23 @@ function App() {
     setSession(sessionLength - 1);
   };
 
+  const centered = {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexDirection: 'column',
+  };
+
   return (
-    <div>
-      <Timer />
-      <Settings
+    <div style={centered}>
+      <Timer breakLength={breakLength} sessionLength={sessionLength} />
+      <Break
         breakLength={breakLength}
-        sessionLength={sessionLength}
         incrementBreak={incrementBreakHandler}
         decrementBreak={decrementBreakHandler}
+      />
+      <Session
+        sessionLength={sessionLength}
         incrementSession={incrementSessionHandler}
         decrementSession={decrementSessionHandler}
       />
